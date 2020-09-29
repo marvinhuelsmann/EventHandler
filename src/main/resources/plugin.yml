@@ -1,0 +1,4 @@
+name: EventHandler
+authors: [Marvin Hülsmann]
+version: ${project.version}
+main: de.marvhuelsmann.eventhandler.EventManager
