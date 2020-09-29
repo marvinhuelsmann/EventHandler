@@ -13,5 +13,6 @@ public class PlayerEventJoinListener implements Listener {
         EventPlayer eventPlayer = e.getEventPlayer();
         eventPlayer.bukkit().sendMessage(e.getCurrentTime() + e.getCurrentIp());
 
+
     }
 }
