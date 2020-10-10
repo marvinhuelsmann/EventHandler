@@ -8,7 +8,6 @@ public class PlayerPerfonCommandEvent implements Listener {
 
     @EventHandler
     public void on(PerfomCommandEvent e) {
-
         e.getEventPlayer().bukkit().sendMessage(e.getCommand());
     }
 }

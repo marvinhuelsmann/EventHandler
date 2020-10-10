@@ -1,6 +1,5 @@
 package de.marvhuelsmann.eventhandler.listeners.eventhandler;
 
-import de.marvhuelsmann.eventhandler.EventManager;
 import de.marvhuelsmann.eventhandler.api.events.JoinEvent;
 import de.marvhuelsmann.eventhandler.eventplayer.EventPlayer;
 import org.bukkit.event.EventHandler;
@@ -11,8 +10,6 @@ public class PlayerEventJoinListener implements Listener {
     @EventHandler
     public void on(JoinEvent e) {
         EventPlayer eventPlayer = e.getEventPlayer();
-        eventPlayer.bukkit().sendMessage(e.getCurrentTime() + e.getCurrentIp());
-
-
+        eventPlayer.bukkit().sendMessage("§fTime:§c " + e.getCurrentTime() + "§fand your current Ip Adress§c:" +  e.getCurrentIp());
     }
 }

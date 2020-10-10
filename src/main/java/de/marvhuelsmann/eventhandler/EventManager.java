@@ -1,10 +1,10 @@
 package de.marvhuelsmann.eventhandler;
 
-import de.marvhuelsmann.eventhandler.api.handler.MessageManager;
 import de.marvhuelsmann.eventhandler.api.interfaces.Message;
 import de.marvhuelsmann.eventhandler.eventplayer.EventPlayer;
 import de.marvhuelsmann.eventhandler.listeners.bukkit.PlayerCommandPreprocessListener;
 import de.marvhuelsmann.eventhandler.listeners.bukkit.PlayerJoinListener;
+import de.marvhuelsmann.eventhandler.listeners.bukkit.PlayerMoveListener;
 import de.marvhuelsmann.eventhandler.listeners.bukkit.PlayerQuitListener;
 import de.marvhuelsmann.eventhandler.listeners.eventhandler.PlayerEventJoinListener;
 import de.marvhuelsmann.eventhandler.listeners.eventhandler.PlayerPerfonCommandEvent;
@@ -16,15 +16,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class EventManager extends JavaPlugin {
 
     @Getter
-    private static EventManager instance;
+    public static EventManager instance;
     @Getter
     public Message messageManager;
 
     protected void setInstance(final EventManager instance) {
-        if (instance == null) {
-            System.err.println("EventHandler instance cannot be set twice!");
-        } else {
+        if (null != instance) {
             EventManager.instance = instance;
+        } else {
+            System.err.println("instance already set!");
         }
     }
 
@@ -47,6 +47,7 @@ public class EventManager extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), EventManager.getInstance());
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), EventManager.getInstance());
         Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocessListener(), EventManager.getInstance());
+        Bukkit.getPluginManager().registerEvents(new PlayerMoveListener(), EventManager.getInstance());
 
     }
 
@@ -56,7 +57,8 @@ public class EventManager extends JavaPlugin {
 
     }
 
-    private void loadCommands() {}
+    private void loadCommands() {
+    }
 
     public EventPlayer getEventHandler(Player player) {
         return new EventPlayer(player);
