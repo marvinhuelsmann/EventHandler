@@ -1,4 +1,4 @@
-package de.marvhuelsmann.eventhandler.api.interfaces;
+package de.marvhuelsmann.eventhandler.api.handler;
 
 import de.marvhuelsmann.eventhandler.eventplayer.EventPlayer;
 import org.bukkit.entity.Player;

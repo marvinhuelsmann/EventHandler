@@ -1,13 +1,15 @@
 package de.marvhuelsmann.eventhandler;
 
-import de.marvhuelsmann.eventhandler.api.interfaces.Message;
+import de.marvhuelsmann.eventhandler.anotations.AnotationFinder;
+import de.marvhuelsmann.eventhandler.api.handler.Message;
+import de.marvhuelsmann.eventhandler.api.handler.MessageManager;
 import de.marvhuelsmann.eventhandler.eventplayer.EventPlayer;
 import de.marvhuelsmann.eventhandler.listeners.bukkit.PlayerCommandPreprocessListener;
 import de.marvhuelsmann.eventhandler.listeners.bukkit.PlayerJoinListener;
 import de.marvhuelsmann.eventhandler.listeners.bukkit.PlayerMoveListener;
 import de.marvhuelsmann.eventhandler.listeners.bukkit.PlayerQuitListener;
 import de.marvhuelsmann.eventhandler.listeners.eventhandler.PlayerEventJoinListener;
-import de.marvhuelsmann.eventhandler.listeners.eventhandler.PlayerPerfonCommandEvent;
+import de.marvhuelsmann.eventhandler.listeners.eventhandler.PlayerPerformCommandEvent;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -18,7 +20,9 @@ public class EventManager extends JavaPlugin {
     @Getter
     public static EventManager instance;
     @Getter
-    public Message messageManager;
+    private AnotationFinder anotationFinder;
+    @Getter
+    private Message messageManager;
 
     protected void setInstance(final EventManager instance) {
         if (null != instance) {
@@ -33,6 +37,9 @@ public class EventManager extends JavaPlugin {
 
         System.out.println("§aLoaded EventHandler");
         setInstance(this);
+
+        new AnotationFinder().detectAnotation("de.marvhuelsmann.eventhandler.anotations.events");
+
         System.out.println("§2Loaded Bukkit Events....");
         loadBukkitEvents();
         System.out.println("§2Loaded Specific Events....");
@@ -40,7 +47,13 @@ public class EventManager extends JavaPlugin {
         System.out.println("§2Loaded Commands");
         loadCommands();
         System.out.println("Load other Stuff");
+        loadManager();
 
+    }
+
+    private void loadManager() {
+        this.anotationFinder = new AnotationFinder();
+        this.messageManager = new MessageManager();
     }
 
     private void loadBukkitEvents() {
@@ -53,7 +66,7 @@ public class EventManager extends JavaPlugin {
 
     private void loadSpecificEvents() {
         Bukkit.getPluginManager().registerEvents(new PlayerEventJoinListener(), EventManager.getInstance());
-        Bukkit.getPluginManager().registerEvents(new PlayerPerfonCommandEvent(), EventManager.getInstance());
+        Bukkit.getPluginManager().registerEvents(new PlayerPerformCommandEvent(), EventManager.getInstance());
 
     }
 
